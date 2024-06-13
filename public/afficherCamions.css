@@ -1,0 +1,56 @@
+body {
+  font-family: sans-serif;
+  background-color: rgb(51, 47, 47);
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  word-break: break-word; /* Ensures long words break to next line */
+  white-space: normal; /* Allows normal wrapping of text */
+}
+
+th {
+  text-align: center; /* Centers text inside header cells */
+}
+
+button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  width: 95%;
+  
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+button:hover {
+  background-color: #3e8e41;
+  color: black;
+}
+.actions{
+  display: block;
+  justify-content: space-between;
+}

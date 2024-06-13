@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Camions</title>
+    <link rel="stylesheet" href="ajouterCamion.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion des Camions</h1>
+        <form  id="camionForm">
+            <label for="immatriculation">Immatriculation :</label>
+            <input type="text" id="immatriculation" name="immatriculation"required>
+            <label for="type">Type :</label>
+            <input type="text" id="type" name="type" required>
+            <label for="kilometrage">Kilométrage Parcouru :</label>
+            <input type="number" id="kilometrage" name="kilometrage" required>
+            <label for="dernierVidangeDate">Date du Dernier Vidange :</label>
+            <input type="date" id="dernierVidangeDate" name="dernierVidangeDate" required>
+            <label for="dernierVidangeKilometrage">Kilométrage au Dernier Vidange :</label>
+            <input type="number" id="dernierVidangeKilometrage" name="dernierVidangeKilometrage" required>
+            <label for="details">détails sur le vaidange fait:</label>
+            <input type="text" id="details" name="details">
+            <button type="submit">Enregistrer</button>
+            
+        </form>
+    </div>
+    <script src="ajouterCamion.js"></script>
+</body>
+</html>
