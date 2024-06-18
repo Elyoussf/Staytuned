@@ -6,6 +6,7 @@ const cors = require('cors');
 const connectDB = require('./database/db');
 const Camion = require('./models/Camion');
 const dotenv = require('dotenv')
+const path = require('path')
 const {send} = require('./alertesPreventives/alerte');
 const authController= require('./controllers/auth');
 const auth = require('./middleware/auth');
@@ -21,7 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
 app.options('*', cors());
-
+app.get('/',function (req,res){
+res.sendFile(path.join(__dirname,'public/landPage.html'))
+})
 // Create a new camion
 app.post('/camions', auth,async (req, res) => {
     try {
@@ -105,4 +108,9 @@ app.delete('/camions/:immatriculation',auth, async (req, res) => {
 
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
+app.post('/api/logout', authController.logout);
 app.listen(port, () => console.log(`Serveur démarré sur le port ${port}`));
+
+const notlogged = (req,res)=>{
+    fetch('http://127.0.0.1')
+}

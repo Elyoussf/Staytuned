@@ -1,0 +1,33 @@
+body{
+    background-color: black;
+}
+div{
+    background-color: white;
+    color: black;
+    width: 90%;
+    margin: 5%;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+button{
+    background-color: yellowgreen;
+    border-radius: 10px;
+    width: 100px;
+
+}
+a{
+    text-decoration: none;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 40%;
+    margin-right: 40%;
+    
+}
+img{
+    border-radius: 50%;
+    margin-left: 40%;
+    margin-right: 25%;
+}

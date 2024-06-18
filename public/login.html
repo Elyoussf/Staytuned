@@ -42,7 +42,7 @@
 
                 const result = await response.json();
                 localStorage.setItem('token', result.token);
-                alert('Login successful');
+              
                 // Optionally redirect to another page
                  window.location.href = '/afficherCamions.html';
             } catch (error) {

@@ -158,3 +158,23 @@ if (n>0){
     }   
 
   })
+
+  document.querySelector('.logout').addEventListener('click', async function() {
+    try {
+        const response = await fetch('http://127.0.0.1:5000/api/logout', {
+            method: 'POST'
+        });
+
+        if (!response.ok) {
+            throw new Error('Logout failed');
+        }
+
+        const result = await response.json();
+
+        window.location.href = "./login.html"
+        // Optionally redirect to login page
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Logout failed');
+    }
+});

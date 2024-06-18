@@ -43,12 +43,23 @@ exports.login = async (req, res) => {
             if (err) throw err;
             res.cookie('token', token, { 
                 httpOnly: true, 
-                secure: true, 
-                sameSite: 'Strict' 
+                secure: process.env.NODE_ENV === 'production', 
+                sameSite: 'Strict', 
+                maxAge: 3600000 // 1 hour
             }).json({ msg: 'Login successful' });
         });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
     }
+};
+
+// Logout a user
+exports.logout = async (req, res) => {
+    res.cookie('token', '', { 
+        httpOnly: true, 
+       
+        sameSite: 'Strict', 
+        expires: new Date(0) 
+    }).json({ msg: 'Logout successful' });
 };

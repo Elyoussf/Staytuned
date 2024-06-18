@@ -54,3 +54,11 @@ button:hover {
   display: block;
   justify-content: space-between;
 }
+.buttons{
+  display: flex;
+  justify-content: space-evenly;
+
+}
+.logout{
+  background-color: red;
+}
