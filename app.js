@@ -112,5 +112,5 @@ app.post('/api/logout', authController.logout);
 app.listen(port, () => console.log(`Serveur démarré sur le port ${port}`));
 
 const notlogged = (req,res)=>{
-    fetch('http://127.0.0.1')
+    res.sendFile(__dirname,"public/landPage.html")
 }

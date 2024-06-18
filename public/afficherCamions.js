@@ -60,6 +60,7 @@ if (n>0){
       }
     } catch (error) {
       console.error('Error fetching trucks:', error);
+      window.location.href="landPage.html"
     }
   });
   
