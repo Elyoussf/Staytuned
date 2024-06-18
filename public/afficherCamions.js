@@ -1,7 +1,7 @@
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/camions'); // Assuming your Express endpoint
+      const response = await fetch('http://127.0.0.1:5000/camions',{credentials: 'include'}); // Assuming your Express endpoint
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         responseData.forEach(displayTruck);  // Display each truck in the table
         const to = "elyoussfiihaamza@gmail.com";
             const subject = "vidange alerte";
-            let body = "Les immatriculations des camions qui auront besoin de vidange avec le temps restant pour chacun:\n ";
+            let body = "Les immatriculations des camions qui auront besoin de vidange avec les kilomètres restant pour chacun:\n ";
             let n = ar.length;
             for (let i=0;i<n;i++){
               body+=`${ar[i][0]} : apres ${ar[i][1]} km \n`
@@ -41,7 +41,8 @@ if (n>0){
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ to, subject, body })
+                body: JSON.stringify({ to, subject, body }),
+                credentials: 'include'
             })
             .then(response => response.text())
             .then(data => {
@@ -128,7 +129,7 @@ if (n>0){
                     const truckId = e.target.dataset.id;
                     const immatriculation = truckId;
                     try{
-                      fetch(`http://127.0.0.1:5000/camions/${immatriculation}`,{method:'DELETE'})
+                      fetch(`http://127.0.0.1:5000/camions/${immatriculation}`,{method:'DELETE',credentials: 'include'})
    
                         rowToDelete.remove();
                       

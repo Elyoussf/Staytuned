@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+dotenv.config()
 
-const dbPath = "mongodb://127.0.0.1:27017/yahala"
+const dbPath = process.env.MONGO_URI
 const connectDB = async ()=>{await mongoose.connect(dbPath)
     .then(()=>console.log("connected successfully!!"))
     .catch((err)=>{

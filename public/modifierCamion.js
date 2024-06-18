@@ -36,6 +36,8 @@ modifier.addEventListener('click', (e) => {
             headers: {
                 'Content-Type': 'application/json'
             }
+            ,
+            credentials: 'include'
         }).then(() => {
             console.log("Update successful");
             window.location.href = './afficherCamions.html';

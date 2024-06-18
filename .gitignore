@@ -16,7 +16,8 @@ Thumbs.db
 
 # Environment variables
 .env
-
+.vscode
 # Build outputs
 dist/
 build/
+twilio

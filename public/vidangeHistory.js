@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function fetchData(immatriculation) {
         try {
             const response = await fetch(`http://127.0.0.1:5000/camions/${immatriculation}`, {
-                method: 'GET'
+                method: 'GET',
+                credentials: 'include'
             });
 
             // Check for successful response

@@ -1,15 +1,20 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./database/db');
 const Camion = require('./models/Camion');
 const dotenv = require('dotenv')
+const {send} = require('./alertesPreventives/alerte');
+const authController= require('./controllers/auth');
+const auth = require('./middleware/auth');
 const app = express();
-const port = 5000;
+const port = process.env.PORT
 dotenv.config()
 connectDB();
 app.use(bodyParser.json());
+app.use(cookieParser())
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +23,7 @@ app.use(express.static('./public'));
 app.options('*', cors());
 
 // Create a new camion
-app.post('/camions', async (req, res) => {
+app.post('/camions', auth,async (req, res) => {
     try {
         const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,details} = req.body;
         const nouveauCamion = new Camion({
@@ -37,7 +42,7 @@ app.post('/camions', async (req, res) => {
 });
 
 // Update camion using POST
-app.post('/camions/update', async (req, res) => {
+app.post('/camions/update',auth, async (req, res) => {
     
     try {
         const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,details} = req.body;
@@ -62,7 +67,7 @@ app.post('/camions/update', async (req, res) => {
 });
 
 // Get all camions
-app.get('/camions', async (req, res) => {
+app.get('/camions',auth, async (req, res) => {
     try {
         const camions = await Camion.find();
         res.status(200).json(camions);
@@ -72,7 +77,7 @@ app.get('/camions', async (req, res) => {
 });
 
 // Get a camion by immatriculation
-app.get('/camions/:immatriculation', async (req, res) => {
+app.get('/camions/:immatriculation',auth, async (req, res) => {
     try {
         const camion = await Camion.findOne({ immatriculation: req.params.immatriculation });
         if (!camion) {
@@ -85,7 +90,7 @@ app.get('/camions/:immatriculation', async (req, res) => {
 });
 
 // Delete a camion by immatriculation
-app.delete('/camions/:immatriculation', async (req, res) => {
+app.delete('/camions/:immatriculation',auth, async (req, res) => {
     try {
         const camion = await Camion.findOneAndDelete({ immatriculation: req.params.immatriculation });
         if (!camion) {
@@ -96,42 +101,8 @@ app.delete('/camions/:immatriculation', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+//app.post("/send-email",auth,send);
 
-// Start the server
-
-/*app.post('/send-email', (req, res) => {
-    const { to, subject, body } = req.body;
-
-    // Create a transporter object using Gmail SMTP and the app password
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'strangeamazigh1968@gmail.com', // Your email address
-            pass: process.env.app_password     // Your app password
-        }
-    });
-
-    // Email options
-    const mailOptions = {
-        from: 'strangeamazigh1968@gmail.com',
-        to: to,
-        subject: subject,
-        text: body
-    };
-
-    // Send email
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).send(error.toString());
-        }
-        res.status(200).send('Email sent: ' + info.response);
-    });
-});
-
-
-
-
-
-
-*/
+app.post('/api/register', authController.register);
+app.post('/api/login', authController.login);
 app.listen(port, () => console.log(`Serveur démarré sur le port ${port}`));

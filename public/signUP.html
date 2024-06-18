@@ -9,7 +9,7 @@
 <body>
     <div class="signup-container">
         <h1>Sign Up</h1>
-        <form action="/signup" method="POST">
+        <form id="signup-form">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
             
@@ -22,11 +22,48 @@
             <label for="confirm-password">Confirm Password</label>
             <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
             
-            <button type="submit">signup</button>
+            <button type="submit">Sign Up</button>
         </form>
     </div>
 
+    <script>
+        document.querySelector('button').addEventListener('click', async function(event) {
+            event.preventDefault();
+            const form = document.querySelector('#signup-form');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
 
-</script>
+            if (data.password !== data['confirm-password']) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: data.username,
+                        email: data.email,
+                        password: data.password
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Sign up failed');
+                }
+
+                const result = await response.json();
+                alert('Sign up successful');
+                // Optionally redirect to login page or another page
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Sign up failed');
+            }
+        });
+    </script>
 </body>
 </html>

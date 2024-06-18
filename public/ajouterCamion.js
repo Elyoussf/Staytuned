@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: payload,
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                credentials: 'include'
             });
 
            // if (!response.ok) {
