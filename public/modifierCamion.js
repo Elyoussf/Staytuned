@@ -31,6 +31,7 @@ modifier.addEventListener('click', (e) => {
                 kilometrage: res.kilometrage,
                 dernierVidangeDate: res.dernierVidangeDate,
                 dernierVidangeKilometrage: res.dernierVidangeKilometrage,
+                cout:res.cout,
                 details : res.details
             }),
             headers: {

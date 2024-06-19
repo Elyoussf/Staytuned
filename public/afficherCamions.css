@@ -1,7 +1,21 @@
+:root{
+  --white:#fff;
+  --black:#000;
+  
+  --dark:#171615;
+  --gray:#4d5156;
+  --lite:#e3e3e3;
+  
+  --primary:#7963F9;
+  --primary_lite:#74DFEF;
+  --primary_dark:#181E2B;
+}
+
+
 body {
   font-family: sans-serif;
-  background-color: rgb(51, 47, 47);
-  color: white;
+  background-color:var(--primary_dark);
+  color:var(--white);
 }
 
 h1 {
@@ -56,9 +70,35 @@ button:hover {
 }
 .buttons{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  
 
+}
+button{
+  transition-duration: 1s;
 }
 .logout{
   background-color: red;
+  width: 100px;
 }
+button:hover{
+  background-color: var(--gray);
+}
+
+
+
+
+    @media only screen and (max-width: 800px){ 
+     
+      body { 
+        -ms-transform: rotate(90deg); /* IE 9 */ 
+        -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */ 
+        transform: rotate(90deg); 
+        width: 950px; 
+        height: 100% ; 
+        margin: 550px;
+        
+        
+        overflow: scroll; 
+      } 
+    } 

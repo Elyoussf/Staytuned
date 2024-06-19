@@ -6,6 +6,7 @@ module.exports = function(req, res, next) {
 
     // Check if no token
     if (!token) {
+        res.redirect('../public/landPage.html')
         return res.status(401).json({ msg: 'No token, authorization denied' });
     }
 
@@ -15,6 +16,7 @@ module.exports = function(req, res, next) {
         req.user = decoded.user;
         next();
     } catch (err) {
+        res.redirect('../public/landPage.html')
         res.status(401).json({ msg: 'Token is not valid' });
     }
 };

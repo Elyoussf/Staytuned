@@ -1,7 +1,12 @@
+body{
+    background-color: #181E2B;
+}
 .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 50px;
+    background-color: #181E2B;
+    color: aliceblue;
 }
 
 form {

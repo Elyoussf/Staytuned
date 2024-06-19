@@ -6,6 +6,7 @@ const EnregistrementMaintenanceSchema = new Schema({
  
   date: { type: Date, required: true,unique:true },
   kilometrage: { type: Number, required: true },
+  cout:{type:Number,required:true},
   details: { type: String, required: false }
 });
 

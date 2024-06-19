@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #181E2B;
 }
 
 .signup-container {
@@ -16,12 +16,14 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
     text-align: center;
+    background-color: #181E2B;
+    color: white;
 }
 
 .signup-container h1 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #333;
+    color: whitesmoke;
 }
 
 .signup-container form {
@@ -33,7 +35,7 @@ body {
     margin-bottom: 5px;
     font-weight: bold;
     text-align: left;
-    color: #555;
+
 }
 
 .signup-container form input {

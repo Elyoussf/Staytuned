@@ -10,6 +10,7 @@ const path = require('path')
 const {send} = require('./alertesPreventives/alerte');
 const authController= require('./controllers/auth');
 const auth = require('./middleware/auth');
+const { Console } = require('console');
 const app = express();
 const port = process.env.PORT
 dotenv.config()
@@ -27,17 +28,20 @@ res.sendFile(path.join(__dirname,'public/landPage.html'))
 })
 // Create a new camion
 app.post('/camions', auth,async (req, res) => {
+  
     try {
-        const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,details} = req.body;
+        const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,cout,details} = req.body;
+        console.log(cout);
         const nouveauCamion = new Camion({
             immatriculation,
             type,
             kilometrage,
-            vidanges: [{ date: dernierVidangeDate, kilometrage: dernierVidangeKilometrage,details:details }],
+            vidanges: [{ date: dernierVidangeDate, kilometrage: dernierVidangeKilometrage,cout:cout,details:details }],
             
         });
-       
+        
         await nouveauCamion.save();
+        console.log("received")
         res.status(200).json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -48,13 +52,13 @@ app.post('/camions', auth,async (req, res) => {
 app.post('/camions/update',auth, async (req, res) => {
     
     try {
-        const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,details} = req.body;
+        const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,cout,details} = req.body;
         const camion = await Camion.findOneAndUpdate(
             { immatriculation },
             {
                 type,
                 kilometrage,
-                $push: { vidanges: { date: dernierVidangeDate, kilometrage: dernierVidangeKilometrage,details:details } },
+                $push: { vidanges: { date: dernierVidangeDate, kilometrage: dernierVidangeKilometrage,cout:cout,details:details } },
                      
               },
             { new: true }
@@ -109,8 +113,36 @@ app.delete('/camions/:immatriculation',auth, async (req, res) => {
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
 app.post('/api/logout', authController.logout);
+
+app.post('/api/getCoutByYear', auth,async (req, res) => {
+    const { year } = req.body;
+
+    try {
+        const startDate = new Date(`${year}-01-01`);
+        const endDate = new Date(`${year}-12-31`);
+
+        const camions = await Camion.find({ 'vidanges.date': { $gte: startDate, $lte: endDate } });
+        
+        const result = camions.reduce((acc, camion) => {
+            camion.vidanges.forEach(vidange => {
+                if (vidange.date >= startDate && vidange.date <= endDate) {
+                    acc.push({
+                        date: vidange.date,
+                        cout: vidange.cout
+                    });
+                }
+            });
+            return acc;
+        }, []);
+
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+
 app.listen(port, () => console.log(`Serveur démarré sur le port ${port}`));
 
-const notlogged = (req,res)=>{
-    res.sendFile(__dirname,"public/landPage.html")
-}

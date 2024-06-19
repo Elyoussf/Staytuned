@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const immatriculation = urlParams.get('immatriculation');
+    const h1 = document.querySelector('h1');
+    h1.innerText+=` ${immatriculation}`
 
     async function fetchData(immatriculation) {
         try {
@@ -32,7 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
         newRow.innerHTML = `
             <td>${new Date(vidange.date).toLocaleDateString()}</td>
             <td>${vidange.kilometrage}</td>
-            <td>${vidange.details}</td>
+            <td>${vidange.cout}</td>
+            <td class="details">${vidange.details}</td>
         `;
     };
 

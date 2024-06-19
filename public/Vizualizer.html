@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost Visualization</title>
+    <link rel="stylesheet" href="Visualizer.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Cost Visualization</h1>
+        <form id="filter-form">
+            <label for="year">Select Year:</label>
+            <input type="number" id="year" name="year" required>
+            
+            <label for="immatriculation">Truck Immatriculation:</label>
+            <input type="text" id="immatriculation" name="immatriculation" required>
+            
+            <button type="submit">Submit</button>
+        </form>
+        <canvas id="costChart"></canvas>
+        <table id="costTable">
+            <thead>
+                
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        let chart;
+
+        document.querySelector('#filter-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const year = document.querySelector('#year').value;
+            const immatriculation = document.querySelector('#immatriculation').value;
+
+            const response = await fetch(`http://127.0.0.1:5000/camions/${immatriculation}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok){
+                window.location.href = "./landPage.html"
+            }
+            const camion = await response.json();
+
+            if (camion.error) {
+                alert('Truck not found');
+                return;
+            }
+
+            const result = camion.vidanges.filter(vidange => {
+                const vidangeDate = new Date(vidange.date);
+                return vidangeDate.getFullYear() === parseInt(year);
+            });
+
+            // Sort the data by date
+            result.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            // Process data for chart
+            const labels = result.map(entry => new Date(entry.date).toLocaleDateString());
+            const data = result.map(entry => entry.cout);
+
+            // Destroy existing chart if it exists
+            if (chart) {
+                chart.destroy();
+            }
+
+            // Create chart
+            const ctx = document.getElementById('costChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cost over the Year',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'month'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Fill table
+            const tableBody = document.querySelector('#costTable tbody');
+            tableBody.innerHTML = '';
+            
+
+            // Calculate total cost
+            const totalCost = data.reduce((acc, cost) => acc + cost, 0);
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                <td><strong>Total du cout pour l'année ${year} camion immatricule: ${immatriculation}</strong></td>
+                <td><strong>${totalCost}</strong></td>
+            `;
+            tableBody.appendChild(totalRow);
+        });
+    </script>
+</body>
+</html>

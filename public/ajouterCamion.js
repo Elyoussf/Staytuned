@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('kilometrage'),
         document.getElementById('dernierVidangeDate'),
         document.getElementById('dernierVidangeKilometrage'),
-        document.getElementById('details')
+        document.getElementById('cout'),
+        document.getElementById('details'),
+        
     ];
 
     camionForm.addEventListener('submit', async (e) => {
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(camionForm);
         const res = Object.fromEntries(formData);
         const payload = JSON.stringify(res);
-        console.log(res)
+      
 
         try {
             const response = await fetch('http://127.0.0.1:5000/camions', {
@@ -26,10 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 credentials: 'include'
             });
-
-           // if (!response.ok) {
-             //   throw new Error('Network response was not ok');
-            //}
+//if (!response.ok) {
+  //             throw new Error('Network response was not ok');
+    //        }
 
             // Clear form inputs
             inputs.forEach(input => input.value = '');
