@@ -32,13 +32,13 @@
 
     <script>
         let chart;
-
+        const address = "https://80b2-196-81-60-153.ngrok-free.app"
         document.querySelector('#filter-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             const year = document.querySelector('#year').value;
             const immatriculation = document.querySelector('#immatriculation').value;
 
-            const response = await fetch(`http://127.0.0.1:5000/camions/${immatriculation}`, {
+            const response = await fetch(`${address}/camions/${immatriculation}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'

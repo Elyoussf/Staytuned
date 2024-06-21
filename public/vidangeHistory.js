@@ -1,3 +1,4 @@
+const address = "https://80b2-196-81-60-153.ngrok-free.app"
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const immatriculation = urlParams.get('immatriculation');
@@ -6,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchData(immatriculation) {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/camions/${immatriculation}`, {
+            const response = await fetch(`${address}/camions/${immatriculation}`, {
                 method: 'GET',
                 credentials: 'include'
             });

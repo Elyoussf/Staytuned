@@ -27,6 +27,7 @@
     </div>
 
     <script>
+        const address = "https://80b2-196-81-60-153.ngrok-free.app"
         document.querySelector('button').addEventListener('click', async function(event) {
             event.preventDefault();
             const form = document.querySelector('#signup-form');
@@ -39,7 +40,7 @@
             }
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/api/register', {
+                const response = await fetch(`${address}/api/register`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

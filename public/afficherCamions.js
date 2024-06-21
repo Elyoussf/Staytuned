@@ -1,7 +1,8 @@
+const address = "https://80b2-196-81-60-153.ngrok-free.app"
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/camions',{credentials: 'include'}); // Assuming your Express endpoint
+      const response = await fetch(`${address}/camions`,{credentials: 'include'}); // Assuming your Express endpoint
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (Array.isArray(responseData)) {
         
         responseData.forEach(displayTruck);  // Display each truck in the table
-        const to = "elyoussfiihaamza@gmail.com";
+        
             const subject = "vidange alerte";
             let body = "Les immatriculations des camions qui auront besoin de vidange avec les kilomètres restant pour chacun:\n ";
             let n = ar.length;
@@ -36,12 +37,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 if (n>0){
 
 
-            fetch('http://127.0.0.1:5000/send-email', {
+            fetch(`${address}/send-email`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ to, subject, body }),
+                body: JSON.stringify({subject, body }),
                 credentials: 'include'
             })
             .then(response => response.text())
@@ -72,7 +73,7 @@ if (n>0){
     tableRow.className="warning"
   
     let lastVidangeDate = 'Pas de vidanges enregistrées';
-    let kilometersSinceLastVidange = 'N/A';
+    
     const lastVidange = truck.vidanges[truck.vidanges.length - 1];
     if (truck.vidanges && truck.vidanges.length > 0) {
     
@@ -80,7 +81,8 @@ if (n>0){
       lastVidangeDate = new Date(lastVidange.date).toLocaleDateString(); // Format the date
       
     }
-  if (10000-(truck.kilometrage-lastVidange.kilometrage)<=1000) {tableRow.style.backgroundColor = "red"
+  if (10000-(truck.kilometrage-lastVidange.kilometrage)<=1000) {tableRow.style.backgroundColor = "#eed202"
+    tableRow.style.color = "black"
    const index = truck.immatriculation
    const val = (10000-(truck.kilometrage-lastVidange.kilometrage))
     ar.push([index,val])
@@ -124,24 +126,42 @@ if (n>0){
 
 
 
-   tableBody.addEventListener('click', (e) => {
+   tableBody.addEventListener('click', async (e) => {
                 if (e.target.classList.contains('delete-button')) {
+                  const userInput = window.prompt("entrer le mot de passe pour modifier");
+                  const response = await fetch('/verify-key', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ secret_key: userInput })
+                });
+              
+                const result = await response.json();  
+                if (result.success){
+
+                
+
+
                     const rowToDelete = e.target.closest('tr');
                     const truckId = e.target.dataset.id;
                     const immatriculation = truckId;
                     try{
-                      fetch(`http://127.0.0.1:5000/camions/${immatriculation}`,{method:'DELETE',credentials: 'include'})
+                      fetch(`${address}/camions/${immatriculation}`,{method:'DELETE',credentials: 'include'})
    
                         rowToDelete.remove();
                       
                     }catch(error){console.error("error: ",error)}
                     
-     
+                  }else{
+                    alert("mot de passe invalide")
+                  }
                 }
-            });
-  tableBody.addEventListener('click',(e)=>{
+           } );
+  tableBody.addEventListener('click',async (e)=>{
     e.preventDefault();
       if (e.target.classList.contains('update-button')) {
+       
         const truckId = e.target.dataset.id;
         const row = e.target.closest('tr');
         const immatriculation = row.querySelector('td:nth-child(1)').textContent;
@@ -156,13 +176,13 @@ if (n>0){
 
         // Redirect to modifierCamions.html with the query string
         window.location.href = `./modifierCamions.html${queryString}`;
-    }   
+    }   }
 
-  })
+  )
 
   document.querySelector('.logout').addEventListener('click', async function() {
     try {
-        const response = await fetch('http://127.0.0.1:5000/api/logout', {
+        const response = await fetch(`${address}/api/logout`, {
             method: 'POST'
         });
 
@@ -172,7 +192,7 @@ if (n>0){
 
         const result = await response.json();
 
-        window.location.href = "./login.html"
+        window.location.href = `${address}/`
         // Optionally redirect to login page
     } catch (error) {
         console.error('Error:', error);

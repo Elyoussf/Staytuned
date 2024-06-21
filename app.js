@@ -1,7 +1,9 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cookieParser = require('cookie-parser');
+const Admin = require('./models/admin')
 const bodyParser = require('body-parser');
+const Email = require('./models/Email')
 const cors = require('cors');
 const connectDB = require('./database/db');
 const Camion = require('./models/Camion');
@@ -15,19 +17,29 @@ const app = express();
 const port = process.env.PORT
 dotenv.config()
 connectDB();
+
 app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
-
+app.use(cors({
+    origin: 'https://80b2-196-81-60-153.ngrok-free.app', 
+    credentials: true
+  }));
+ 
 app.options('*', cors());
 app.get('/',function (req,res){
 res.sendFile(path.join(__dirname,'public/landPage.html'))
+
+
+
 })
+
+
 // Create a new camion
-app.post('/camions', auth,async (req, res) => {
+app.post('/camions',auth,async (req, res) => {
   
     try {
         const { immatriculation, type, kilometrage, dernierVidangeDate, dernierVidangeKilometrage ,cout,details} = req.body;
@@ -74,7 +86,7 @@ app.post('/camions/update',auth, async (req, res) => {
 });
 
 // Get all camions
-app.get('/camions',auth, async (req, res) => {
+app.get('/camions', auth,async (req, res) => {
     try {
         const camions = await Camion.find();
         res.status(200).json(camions);
@@ -84,7 +96,7 @@ app.get('/camions',auth, async (req, res) => {
 });
 
 // Get a camion by immatriculation
-app.get('/camions/:immatriculation',auth, async (req, res) => {
+app.get('/camions/:immatriculation', auth,async (req, res) => {
     try {
         const camion = await Camion.findOne({ immatriculation: req.params.immatriculation });
         if (!camion) {
@@ -97,7 +109,7 @@ app.get('/camions/:immatriculation',auth, async (req, res) => {
 });
 
 // Delete a camion by immatriculation
-app.delete('/camions/:immatriculation',auth, async (req, res) => {
+app.delete('/camions/:immatriculation', auth,async (req, res) => {
     try {
         const camion = await Camion.findOneAndDelete({ immatriculation: req.params.immatriculation });
         if (!camion) {
@@ -108,13 +120,13 @@ app.delete('/camions/:immatriculation',auth, async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-//app.post("/send-email",auth,send);
+app.post("/send-email",auth,send);
 
 app.post('/api/register', authController.register);
 app.post('/api/login', authController.login);
 app.post('/api/logout', authController.logout);
 
-app.post('/api/getCoutByYear', auth,async (req, res) => {
+app.post('/api/getCoutByYear',auth,async (req, res) => {
     const { year } = req.body;
 
     try {
@@ -141,6 +153,40 @@ app.post('/api/getCoutByYear', auth,async (req, res) => {
     }
 });
 
+// access admin space
+app.post('/verify-key', async (req, res) => {
+    const { secret_key } = req.body;
+
+    if (!secret_key) {
+        return res.status(400).send('No secret key provided');
+    }
+
+    try {
+   
+        const admin = await Admin.findOne();
+        if (!admin) {
+            return res.status(404).send('Admin data not found');
+        }
+        if (admin.compareSecretKey(secret_key)) {
+            return res.status(200).json({ success: true, message: 'Secret key verified' });
+        } else {
+            return res.status(500).json({ success: false, error: 'Server error' });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Server error');
+    }
+});
+app.post('/change-email',async (req, res) => {
+    const { receiver_email } = req.body;
+    const newEmail = new Email({
+        receiver_email:receiver_email
+    })
+  
+    await newEmail.save()
+    console.log("saved")
+    res.status(200).json({ success: true, message: 'Email added successfully' });
+});
 
 
 

@@ -1,14 +1,30 @@
+const address = "https://80b2-196-81-60-153.ngrok-free.app"
 const urlParams = new URLSearchParams(window.location.search);
 const old_imma = urlParams.get('immatriculation');
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async() => {
+    const userInput = window.prompt("entrer le mot de passe pour modifier");
+    const response = await fetch('/verify-key', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ secret_key: userInput })
+  });
+
+  const result = await response.json();  
+  if (result.success){
+
+  
     document.getElementById('immatriculation').value = urlParams.get('immatriculation');
     document.getElementById('type').value = urlParams.get('type');
     document.getElementById('kilometrage').value = urlParams.get('kilometrage');
     document.getElementById('dernierVidangeDate').value = urlParams.get('dernierVidangeDate');
     document.getElementById('dernierVidangeKilometrage').value = urlParams.get('dernierVidangeKilometrage');
     
-})
+}else{
+    window.location.href = `${address}/afficherCamions.html`
+}})
 
 const modifier = document.querySelector('button');
 
@@ -23,7 +39,7 @@ modifier.addEventListener('click', (e) => {
         alert("Tu as changé l'immatriculation : si c'est prévu merci d'ajouter ce nouveau camion au lieu de le modifier");
     } else {
         
-        fetch('http://127.0.0.1:5000/camions/update', {
+        fetch(`${address}/camions/update`, {
             method: 'POST',
             body: JSON.stringify({
                 immatriculation: res.immatriculation,

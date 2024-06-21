@@ -1,4 +1,17 @@
-document.addEventListener('DOMContentLoaded', () => {
+const address = "https://80b2-196-81-60-153.ngrok-free.app"
+document.addEventListener('DOMContentLoaded', async () => {
+    const userInput = window.prompt("entrer le mot de passe pour ajouter");
+                  const response = await fetch('/verify-key', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ secret_key: userInput })
+                });
+    
+                const result = await response.json();  
+                if (result.success){
+
     const camionForm = document.getElementById('camionForm');
     const inputs = [
         document.getElementById('immatriculation'),
@@ -20,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/camions', {
+            const response = await fetch(`${address}/camions`, {
                 method: "POST",
                 body: payload,
                 headers: {
@@ -41,4 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('There was a problem with the fetch operation:', error);
         }
     });
-});
+}else{
+    window.location.href = `${address}/afficherCamions.html` 
+}});

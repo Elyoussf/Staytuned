@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Key Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        #form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <h1>Enter Secret Key</h1>
+        <form id="key-form">
+            <input type="password" id="secret_key" placeholder="Secret Key" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('key-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const secretKey = document.getElementById('secret_key').value;
+
+            const response = await fetch('/verify-key', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ secret_key: secretKey })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                document.getElementById('form-container').innerHTML = `
+                    <h1>Change Email</h1>
+                    <form id="email-form">
+                        
+                        <input type="email" id="receiver_email" placeholder="Receiver Email" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                `;
+                              document.getElementById('email-form').addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    
+                    const receiverEmail = document.getElementById('receiver_email').value;
+
+                    const emailResponse = await fetch('/change-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ receiver_email: receiverEmail })
+                    });
+
+                    const emailResult = await emailResponse.json();
+
+                    if (emailResult.success) {
+                        alert('Email changed successfully');
+                    } else {
+                        alert('Error changing email');
+                    }
+                });
+            } else {
+                alert('Invalid secret key');
+            }
+        });
+    </script>
+</body>
+</html>
