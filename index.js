@@ -3,6 +3,7 @@ const nodemailer = require('nodemailer');
 const cookieParser = require('cookie-parser');
 const Admin = require('./models/admin')
 const bodyParser = require('body-parser');
+const path = require('path')
 const Email = require('./models/Email')
 const cors = require('cors');
 const connectDB = require('./database/db');
@@ -23,11 +24,9 @@ app.use(cookieParser())
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('./public'));
-app.use(cors({
-    origin: "https://705f-196-81-86-24.ngrok-free.app", 
-    credentials: true
-  }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+
  
 app.options('*', cors());
 app.get('/',function (req,res){
