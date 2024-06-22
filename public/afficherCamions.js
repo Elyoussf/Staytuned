@@ -1,4 +1,4 @@
-const address = "https://705f-196-81-86-24.ngrok-free.app"
+const address = "https://705f-196-81-86-24.ngrok-free.app";
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
