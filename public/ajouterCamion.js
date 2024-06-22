@@ -1,4 +1,4 @@
-const address =process.env.server
+const address =""
 document.addEventListener('DOMContentLoaded', async () => {
     const userInput = window.prompt("entrer le mot de passe pour ajouter");
     

@@ -1,4 +1,4 @@
-const address = process.env.server;
+const address = "";
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
