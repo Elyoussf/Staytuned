@@ -9,7 +9,7 @@ const cors = require('cors');
 const connectDB = require('./database/db');
 const Camion = require('./models/Camion');
 const dotenv = require('dotenv')
-const path = require('path')
+
 const {send} = require('./alertesPreventives/alerte');
 const authController= require('./controllers/auth');
 const auth = require('./middleware/auth');
