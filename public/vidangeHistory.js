@@ -1,4 +1,4 @@
-const address =""
+const address = "https://staytuned-indol.vercel.app";
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const immatriculation = urlParams.get('immatriculation');
