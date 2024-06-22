@@ -185,6 +185,7 @@ app.post('/change-email',async (req, res) => {
     await newEmail.save()
     console.log("saved")
     res.status(200).json({ success: true, message: 'Email added successfully' });
+    
 });
 
 
