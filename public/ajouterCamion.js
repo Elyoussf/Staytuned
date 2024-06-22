@@ -1,4 +1,4 @@
-const address = "https://705f-196-81-86-24.ngrok-free.app"
+const address =process.env.server
 document.addEventListener('DOMContentLoaded', async () => {
     const userInput = window.prompt("entrer le mot de passe pour ajouter");
     

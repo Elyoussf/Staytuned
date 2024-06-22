@@ -27,7 +27,7 @@
     </div>
 
     <script>
-       const address = "https://705f-196-81-86-24.ngrok-free.app"
+      const address =process.env.server
         document.querySelector('button').addEventListener('click', async function(event) {
             event.preventDefault();
             const form = document.querySelector('#signup-form');
