@@ -1,4 +1,4 @@
-const address = "https://80b2-196-81-60-153.ngrok-free.app"
+const address = "https://705f-196-81-86-24.ngrok-free.app"
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -128,7 +128,7 @@ if (n>0){
 
    tableBody.addEventListener('click', async (e) => {
                 if (e.target.classList.contains('delete-button')) {
-                  const userInput = window.prompt("entrer le mot de passe pour modifier");
+                  const userInput = window.prompt("entrer le mot de passe pour supprimer");
                   const response = await fetch('/verify-key', {
                     method: 'POST',
                     headers: {
@@ -198,4 +198,8 @@ if (n>0){
         console.error('Error:', error);
         alert('Logout failed');
     }
+});
+document.getElementById('showButton').addEventListener('click', function() {
+  var buttonContainer = document.getElementById('buttonContainer');
+  buttonContainer.classList.toggle('show');
 });

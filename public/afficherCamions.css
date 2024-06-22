@@ -10,12 +10,20 @@
   --primary_lite:#74DFEF;
   --primary_dark:#181E2B;
 }
-
+button{
+  background-color: wheat;
+  border-radius: 10px;
+}
+.logos{
+  display: flex;
+  justify-content: space-between;
+}
 
 body {
   font-family: sans-serif;
-  background-color:var(--primary_dark);
-  color:var(--white);
+  background-color:var(--white);
+  color:var(--primary_dark);
+  background-image:url('./Camions.avif');
 }
 
 h1 {
@@ -45,47 +53,7 @@ th {
   text-align: center; /* Centers text inside header cells */
 }
 
-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  cursor: pointer;
-  width: 95%;
-  border-radius: 10px;
-  margin-top: 10px;
-  
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
 
-button:hover {
-  background-color: #3e8e41;
-  color: black;
-}
-.actions{
-  display: block;
-  justify-content: space-between;
-}
-.buttons{
-  display: flex;
-  justify-content: space-between;
-  
-
-}
-button{
-  transition-duration: 1s;
-}
-.logout{
-  background-color: red;
-  width: 100px;
-}
-button:hover{
-  background-color: var(--gray);
-}
 
 
 
@@ -104,3 +72,80 @@ button:hover{
         overflow: scroll; 
       } 
     } 
+
+
+    .menu-container {
+      text-align: center;
+      position: relative; /* Relative to position the dropdown correctly */
+      width: 200px;
+  }
+  
+  .menu-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+  }
+  
+  .menu-button i {
+      margin-right: 8px;
+  }
+  
+  .menu-button:hover {
+      background-color: #0056b3;
+  }
+  
+  .hidden-buttons {
+      position: absolute;
+      top: 95%; /* Position below the main button */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+      opacity: 0;
+      background-color: rgba(255, 255, 255, 1); /* Semi-transparent background */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      z-index: 1000;
+  }
+  
+  .hidden-buttons.show {
+      max-height: max-content; /* Adjust as needed to fit all buttons */
+      opacity: 1;
+      transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
+  }
+
+    
+  .hidden-buttons button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgb(8, 2, 2);
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 1); /* Transparent border */
+    transition: background-color 0.3s;
+    border-radius: 10px;
+}
+  .hidden-buttons button:last-child {
+      border-bottom: none;
+  }
+  
+  .hidden-buttons button:hover {
+      background-color: #5a6268;
+  }
+  a{
+    text-decoration: none;
+  }
+  

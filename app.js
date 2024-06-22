@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 app.use(cors({
-    origin: 'https://80b2-196-81-60-153.ngrok-free.app', 
+    origin: "https://705f-196-81-86-24.ngrok-free.app", 
     credentials: true
   }));
  

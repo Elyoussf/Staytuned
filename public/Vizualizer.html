@@ -32,7 +32,22 @@
 
     <script>
         let chart;
-        const address = "https://80b2-196-81-60-153.ngrok-free.app"
+const address = "https://705f-196-81-86-24.ngrok-free.app"
+document.addEventListener("DOMContentLoaded",async()=>{
+    const userInput = window.prompt("entrer le mot de passe pour ajouter");
+                  const response = await fetch('/verify-key', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ secret_key: userInput })
+                });
+    
+                const result = await response.json();  
+                if (!result.success){
+                    window.location.href = "./afficherCamions.html"
+                }
+})
         document.querySelector('#filter-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             const year = document.querySelector('#year').value;

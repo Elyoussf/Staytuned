@@ -1,4 +1,4 @@
-const address = "https://80b2-196-81-60-153.ngrok-free.app"
+const address = "https://705f-196-81-86-24.ngrok-free.app"
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const immatriculation = urlParams.get('immatriculation');
