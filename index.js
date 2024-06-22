@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  
 app.options('*', cors());
 app.get('/',function (req,res){
-res.sendFile(path.join(__dirname,'public/landPage.html'))
+res.sendFile(path.join(__dirname,'public','landPage.html'))
 
 
 
