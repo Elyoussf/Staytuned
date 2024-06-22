@@ -1,8 +1,8 @@
-const address =""
+const address = "https://staytuned-indol.vercel.app";
 document.addEventListener('DOMContentLoaded', async () => {
     const userInput = window.prompt("entrer le mot de passe pour ajouter");
     
-                  const response = await fetch('/verify-key', {
+                  const response = await fetch(`${address}/verify-key`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

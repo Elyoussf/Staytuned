@@ -1,4 +1,4 @@
-const address = "";
+const address = "https://staytuned-indol.vercel.app";
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
