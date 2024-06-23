@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const response = await fetch(`${address}/camions`,{credentials: 'include'}); // Assuming your Express endpoint
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! message: ${response.error}`);
       }
   
       let responseData = await response.text(); // Get the response as text

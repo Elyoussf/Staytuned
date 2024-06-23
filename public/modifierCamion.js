@@ -1,4 +1,4 @@
-const address = process.env.NEXT_PUBLIC_API_URL;
+const address = ""
 const urlParams = new URLSearchParams(window.location.search);
 const old_imma = urlParams.get('immatriculation');
 
