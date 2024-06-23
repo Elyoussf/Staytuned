@@ -27,7 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
- 
+app.use(cors({origin: 'https://staytuned-indol.vercel.app'}));
+
 app.options('*', cors());
 app.get('/',function (req,res){
 res.sendFile(path.join(__dirname,'public','landPage.html'))
