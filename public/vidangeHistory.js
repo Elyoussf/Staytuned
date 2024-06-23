@@ -1,4 +1,4 @@
-const address = "https://staytuned-rho.vercel.app";
+const address = process.env.NEXT_PUBLIC_API_URL;
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const immatriculation = urlParams.get('immatriculation');

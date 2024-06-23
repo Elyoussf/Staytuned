@@ -1,4 +1,4 @@
-const address = "https://staytuned-rho.vercel.app";
+const address = process.env.NEXT_PUBLIC_API_URL;
 const urlParams = new URLSearchParams(window.location.search);
 const old_imma = urlParams.get('immatriculation');
 
