@@ -1,4 +1,4 @@
-const address = "https://staytuned-l16q7u3uq-hamzas-projects-7f3b1634.vercel.app";
+const address = "https://staytuned-xi.vercel.app";
 document.addEventListener('DOMContentLoaded', async () => {
     const userInput = window.prompt("entrer le mot de passe pour ajouter");
     
