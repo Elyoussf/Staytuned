@@ -53,10 +53,10 @@
 </head>
 <body>
     <div id="form-container">
-        <h1>Enter Secret Key</h1>
+        <h1>Entrer le mot d'administrateur</h1>
         <form id="key-form">
             <input type="password" id="secret_key" placeholder="Secret Key" required>
-            <button type="submit">Submit</button>
+            <button type="submit">Essayer</button>
         </form>
     </div>
 
@@ -77,11 +77,11 @@
 
             if (result.success) {
                 document.getElementById('form-container').innerHTML = `
-                    <h1>Change Email</h1>
+                    <h1>Ajouter Email recevant les notifs</h1>
                     <form id="email-form">
                         
                         <input type="email" id="receiver_email" placeholder="Receiver Email" required>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Sauvegarder</button>
                     </form>
                 `;
                               document.getElementById('email-form').addEventListener('submit', async function(event) {
@@ -100,7 +100,7 @@
                     const emailResult = await emailResponse.json();
 
                     if (emailResult.success) {
-                        alert('Email changed successfully');
+                       
                         window.location.href = "/afficherCamions.html"
                     } else {
                         alert('Error changing email');
@@ -108,7 +108,7 @@
                     }
                 });
             } else {
-                alert('Invalid secret key');
+                alert('le mot entré est invalide');
             }
         });
     </script>
