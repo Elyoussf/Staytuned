@@ -21,7 +21,7 @@ connectDB();
 
 app.use(bodyParser.json());
 app.use(cookieParser())
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -29,12 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.options('*', cors());
 app.get('/',function (req,res){
 res.sendFile(path.join(__dirname,'public','landPage.html'))
-
-
-
 })
 
-
+app.use(cors());
 // Create a new camion
 app.post('/camions',auth,async (req, res) => {
   

@@ -1,4 +1,4 @@
-const address = "https://staytuned-xi.vercel.app";
+const address = "https://staytuned-rho.vercel.app";
 const urlParams = new URLSearchParams(window.location.search);
 const old_imma = urlParams.get('immatriculation');
 
