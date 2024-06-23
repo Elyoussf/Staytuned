@@ -26,9 +26,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.use(cors({origin: 'https://staytuned-8cdlexmsf-hamzas-projects-7f3b1634.vercel.app'}));
-
 app.options('*', cors());
 app.get('/',function (req,res){
 res.sendFile(path.join(__dirname,'public','landPage.html'))
