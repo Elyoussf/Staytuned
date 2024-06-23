@@ -3,6 +3,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser'); // Add this line
+
 const connectDB = require('./database/db');
 const Camion = require('./models/Camion');
 const Admin = require('./models/admin');
@@ -23,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors()); // Enable CORS for all routes
+app.use(cookieParser()); // Use cookie-parser middleware
 
 // Routes
 
