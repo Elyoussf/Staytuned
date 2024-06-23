@@ -1,4 +1,4 @@
-const address = process.env.NEXT_PUBLIC_API_URL;
+const address = "";
 const ar=[];
 document.addEventListener('DOMContentLoaded', async () => {
     try {
